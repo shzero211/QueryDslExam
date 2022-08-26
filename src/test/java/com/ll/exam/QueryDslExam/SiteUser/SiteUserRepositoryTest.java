@@ -15,6 +15,15 @@ class SiteUserRepositoryTest {
     siteUserRepository.save(siteUser);
     }
     @Test
+    public void 회원생성Builder(){
+        SiteUser siteUser=SiteUser.builder()
+                .username("userM")
+                .password("userM")
+                .email("userM@naver.com")
+                .build();
+        siteUserRepository.save(siteUser);
+    }
+    @Test
     public void getQslUser(){
         SiteUser siteUser=siteUserRepository.getQslUser(1L);
         assertEquals("user1",siteUser.getUsername());
