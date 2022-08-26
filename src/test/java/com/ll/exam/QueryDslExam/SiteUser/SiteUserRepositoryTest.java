@@ -14,4 +14,9 @@ class SiteUserRepositoryTest {
     SiteUser siteUser=new SiteUser(null,"user1","user1","user1@naver.com");
     siteUserRepository.save(siteUser);
     }
+    @Test
+    public void getQslUser(){
+        SiteUser siteUser=siteUserRepository.getQslUser(1L);
+        assertEquals("user1",siteUser.getUsername());
+    }
 }

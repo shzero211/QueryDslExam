@@ -42,7 +42,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-//querydsl 추가 시작
+//4.querydsl 추가 시작
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
