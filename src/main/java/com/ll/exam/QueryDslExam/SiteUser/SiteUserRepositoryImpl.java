@@ -16,4 +16,12 @@ public class SiteUserRepositoryImpl implements  SiteUserRepositoryCustom{
                 .where(siteUser.id.eq(id))
                 .fetchOne();
     }
+
+    @Override
+    public long getQslCount() {
+      return jpaQueryFactory
+              .select(siteUser.count())
+              .from(siteUser)
+              .fetchOne();
+    }
 }

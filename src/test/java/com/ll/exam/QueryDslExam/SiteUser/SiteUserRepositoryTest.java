@@ -1,5 +1,6 @@
 package com.ll.exam.QueryDslExam.SiteUser;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,5 +44,11 @@ class SiteUserRepositoryTest {
     public void getQslUser(){
         SiteUser siteUser=siteUserRepository.getQslUser(1L);
         assertEquals("user1",siteUser.getUsername());
+    }
+    @Test
+    @DisplayName("모든 회원의 수")
+    public void getQslCount(){
+        long count=siteUserRepository.getQslCount();
+        assertEquals(2,count);
     }
 }
