@@ -64,5 +64,11 @@ class SiteUserRepositoryTest {
        List<SiteUser> users=siteUserRepository.getQslUsersOrderByIdAsc();
        assertEquals(users.get(1).getUsername(),"user2");
     }
+    @Test
+    @DisplayName("like Test")
+    public void searchQsl(){
+        List<SiteUser> users=siteUserRepository.searchQsl("1");
+        assertEquals("user1",users.get(0).getUsername());
+    }
 
 }

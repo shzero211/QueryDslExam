@@ -7,4 +7,6 @@ public interface SiteUserRepositoryCustom {
     long getQslCount();
     SiteUser getQslUserOrderByIdAscOne();
     List<SiteUser> getQslUsersOrderByIdAsc();
+    List<SiteUser> searchQsl(String str);
+
 }
