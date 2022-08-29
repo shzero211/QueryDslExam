@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -51,4 +52,17 @@ class SiteUserRepositoryTest {
         long count=siteUserRepository.getQslCount();
         assertEquals(2,count);
     }
+    @Test
+    @DisplayName("가장오래된 회원 1명 ")
+    public void getQslUserOrderByIdAscOne(){
+        SiteUser siteUser=siteUserRepository.getQslUserOrderByIdAscOne();
+        assertEquals(siteUser.getUsername(),"user1");
+    }
+    @Test
+    @DisplayName("전체 회원 오래된순")
+    public void getQslUsersOrderByIdAsc(){
+       List<SiteUser> users=siteUserRepository.getQslUsersOrderByIdAsc();
+       assertEquals(users.get(1).getUsername(),"user2");
+    }
+
 }
