@@ -1,7 +1,17 @@
 package com.ll.exam.QueryDslExam.SiteUser;
 
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
@@ -56,6 +66,27 @@ public class SiteUserRepositoryImpl implements  SiteUserRepositoryCustom{
                )
                .orderBy(siteUser.id.desc())
                .fetch();
+    }
+
+    @Override
+    public Page<SiteUser> searchQsl(String str, Pageable pageable) {
+       JPAQuery<SiteUser> userQuery = jpaQueryFactory
+                .select(siteUser)
+                .from(siteUser)
+                .where(
+                        siteUser.username.contains(str)
+                                .or(siteUser.email.contains(str))
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+       for(Sort.Order o:pageable.getSort()){
+           PathBuilder pathBuilder=new PathBuilder(siteUser.getType(),siteUser.getMetadata());
+           userQuery.orderBy(new OrderSpecifier(o.isAscending()?Order.ASC :  Order.DESC,pathBuilder.get(o.getProperty())));
+       }
+       List<SiteUser> users=userQuery.fetch();
+
+        //return new PageImpl<>(users,pageable,userQuery.fetchCount());
+        return PageableExecutionUtils.getPage(users,pageable,userQuery::fetchCount);
     }
 
 }
