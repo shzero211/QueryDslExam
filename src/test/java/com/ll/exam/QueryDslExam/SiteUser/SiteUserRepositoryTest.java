@@ -8,7 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
+
+import javax.transaction.Transactional;
+
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -139,6 +143,24 @@ class SiteUserRepositoryTest {
         assertThat(u.getUsername()).isEqualTo("user1");
         assertThat(u.getEmail()).isEqualTo("user1@naver.com");
         assertThat(u.getPassword()).isEqualTo("user1");
+    }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    @DisplayName("ManyToMany")
+    void t10() {
+        SiteUser u2 = siteUserRepository.getQslUser(2L);
+
+        u2.addInterestKeywordContent("축구");
+        u2.addInterestKeywordContent("롤");
+        u2.addInterestKeywordContent("헬스");
+        u2.addInterestKeywordContent("헬스"); // 중복등록은 무시
+
+        siteUserRepository.save(u2);
+        // 엔티티클래스 : InterestKeyword(interest_keyword 테이블)
+        // 중간테이블도 생성되어야 함, 힌트 : @ManyToMany
+        // interest_keyword 테이블에 축구, 롤, 헬스에 해당하는 row 3개 생성
     }
 
 }

@@ -1,8 +1,12 @@
 package com.ll.exam.QueryDslExam.SiteUser;
 
+import com.ll.exam.QueryDslExam.Interestkeyword.InterestKeyword;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,4 +26,22 @@ public class SiteUser {
 
     @Column(unique = true)
     private String email;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name="user_interest",
+            joinColumns = @JoinColumn(name = "siteuser_id"),
+            inverseJoinColumns = @JoinColumn(name="interestkeyword_content"))
+    @Builder.Default
+    private Set<InterestKeyword> interestKeywords=new HashSet<>();
+
+    public void addInterestKeywordContent(String keywordContent) {
+        InterestKeyword interestKeyword=new InterestKeyword(keywordContent);
+       for(InterestKeyword interestKeyword1:interestKeywords){
+           if(interestKeyword1.getContent()==interestKeyword.getContent()){
+               return;
+           }
+       }
+     interestKeywords.add(interestKeyword);
+    }
 }
