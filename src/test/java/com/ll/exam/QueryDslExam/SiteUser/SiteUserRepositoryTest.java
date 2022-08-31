@@ -147,7 +147,6 @@ class SiteUserRepositoryTest {
 
     @Test
     @Transactional
-    @Rollback(value = false)
     @DisplayName("ManyToMany")
     void t10() {
         SiteUser u2 = siteUserRepository.getQslUser(2L);
@@ -161,6 +160,13 @@ class SiteUserRepositoryTest {
         // 엔티티클래스 : InterestKeyword(interest_keyword 테이블)
         // 중간테이블도 생성되어야 함, 힌트 : @ManyToMany
         // interest_keyword 테이블에 축구, 롤, 헬스에 해당하는 row 3개 생성
+    }
+    @Test
+    @Transactional
+    @DisplayName("축구에 관심이있는 회원 검색")
+    public void t11(){
+        List<SiteUser> u1=siteUserRepository.getQslUserInterestKeyWord("축구");
+        assertEquals("user1",u1.get(0).getUsername());
     }
 
 }

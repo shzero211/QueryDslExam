@@ -13,9 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 
+import javax.transaction.Transaction;
 import java.util.List;
 
-import static com.ll.exam.QueryDslExam.SiteUser.QSiteUser.*;
+import static com.ll.exam.QueryDslExam.Interestkeyword.QInterestKeyword.interestKeyword;
+import static com.ll.exam.QueryDslExam.SiteUser.QSiteUser.siteUser;
+
 
 @RequiredArgsConstructor
 public class SiteUserRepositoryImpl implements  SiteUserRepositoryCustom{
@@ -98,4 +101,14 @@ public class SiteUserRepositoryImpl implements  SiteUserRepositoryCustom{
         return PageableExecutionUtils.getPage(users, pageable, usersCountQuery::fetchOne);
     }
 
+    @Override
+    public List<SiteUser> getQslUserInterestKeyWord(String keyword) {
+        return jpaQueryFactory
+                .select(siteUser)
+                .from(siteUser)
+                .leftJoin(siteUser.interestKeywords, interestKeyword)
+                .where(interestKeyword.content.eq(keyword))
+                .fetch();
+
+    }
 }
