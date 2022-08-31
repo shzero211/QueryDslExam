@@ -37,11 +37,6 @@ public class SiteUser {
 
     public void addInterestKeywordContent(String keywordContent) {
         InterestKeyword interestKeyword=new InterestKeyword(keywordContent);
-       for(InterestKeyword interestKeyword1:interestKeywords){
-           if(interestKeyword1.getContent()==interestKeyword.getContent()){
-               return;
-           }
-       }
      interestKeywords.add(interestKeyword);
     }
 }
