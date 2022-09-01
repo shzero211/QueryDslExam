@@ -199,4 +199,27 @@ class SiteUserRepositoryTest {
         siteUserRepository.save(u2);
     }
 
+    @Test
+    @Transactional
+    @DisplayName("본인이 본인을 follow 할 수 없다.")
+    void t14() {
+        SiteUser u1 = siteUserRepository.getQslUser(1L);
+
+        u1.follow(u1);
+
+        assertThat(u1.getFollowers().size()).isEqualTo(0);
+    }
+    @Test
+    @Transactional
+    @DisplayName("follow 양쪽 구현")
+    void t15(){
+        SiteUser u1=siteUserRepository.getQslUser(1L);
+        SiteUser u2=siteUserRepository.getQslUser(2L);
+        u1.follow(u2);
+        u1.getFollowers().stream().forEach(siteUser -> System.out.println("u1_followers:"+siteUser.getUsername()));
+        u1.getFollowings().stream().forEach(siteUser -> System.out.println("u1_followings:"+siteUser.getUsername()));
+
+        u2.getFollowers().stream().forEach(siteUser -> System.out.println("u2_followers:"+siteUser.getUsername()));
+        u2.getFollowings().stream().forEach(siteUser -> System.out.println("u2_followings:"+siteUser.getUsername()));
+    }
 }

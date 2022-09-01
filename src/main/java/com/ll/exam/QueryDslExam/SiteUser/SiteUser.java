@@ -39,16 +39,22 @@ public class SiteUser {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<SiteUser> followers = new HashSet<>();
 
+    @Builder.Default
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<SiteUser> followings = new HashSet<>();
+
     public void addInterestKeywordContent(String keywordContent) {
         InterestKeyword interestKeyword=new InterestKeyword(keywordContent);
      interestKeywords.add(interestKeyword);
     }
 
     public void follow(SiteUser following){
-        if(this==following){
-            return;
-        }
-    following.followers.add(this);
+        if (this == following) return;
+        if (following == null) return;
+        if (this.getId() == following.getId()) return;
+
+        following.followers.add(this);
+        this.followings.add(following);
     }
 
 }
