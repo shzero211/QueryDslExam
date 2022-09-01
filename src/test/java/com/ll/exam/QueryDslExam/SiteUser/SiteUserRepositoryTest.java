@@ -186,4 +186,17 @@ class SiteUserRepositoryTest {
 
     }
 
+    @Test
+    @DisplayName("u2=아이돌, u1=팬 u1은 u2의 팔로워 이다.")
+    @Transactional
+    @Rollback
+    void t13() {
+        SiteUser u1 = siteUserRepository.getQslUser(1L);
+        SiteUser u2 = siteUserRepository.getQslUser(2L);
+
+        u1.follow(u2);
+
+        siteUserRepository.save(u2);
+    }
+
 }
