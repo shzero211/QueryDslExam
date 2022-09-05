@@ -236,7 +236,7 @@ class SiteUserRepositoryTest {
     @Rollback(value = false)
     void t17(){
         SiteUser u1=siteUserRepository.getQslUser(8L);
-        List<String> strs=siteUserRepository.getByInterestKeywordContents_byFollowingsOf(u1);
-   assertEquals(4,strs.size());
+        List<String> keywordContents=siteUserRepository.getByInterestKeywordContents_byFollowingsOf(u1);
+   assertEquals(4,keywordContents.size());
     }
 }
