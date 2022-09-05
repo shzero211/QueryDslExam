@@ -222,4 +222,12 @@ class SiteUserRepositoryTest {
         u2.getFollowers().stream().forEach(siteUser -> System.out.println("u2_followers:"+siteUser.getUsername()));
         u2.getFollowings().stream().forEach(siteUser -> System.out.println("u2_followings:"+siteUser.getUsername()));
     }
+    @Test
+    @DisplayName("고아객체제거")
+    @Transactional
+    @Rollback(value = false)
+    void t16(){
+        SiteUser u1=siteUserRepository.getQslUser(1L);
+        u1.removeInterestKeywordContent("농구");
+    }
 }
