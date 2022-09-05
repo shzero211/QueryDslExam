@@ -237,6 +237,6 @@ class SiteUserRepositoryTest {
     void t17(){
         SiteUser u1=siteUserRepository.getQslUser(8L);
         List<String> keywordContents=siteUserRepository.getByInterestKeywordContents_byFollowingsOf(u1);
-   assertEquals(4,keywordContents.size());
+      assertEquals(4,keywordContents.size());
     }
 }
