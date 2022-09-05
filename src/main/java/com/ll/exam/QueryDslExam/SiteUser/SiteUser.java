@@ -26,13 +26,8 @@ public class SiteUser {
 
     @Column(unique = true)
     private String email;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name="user_interest",
-            joinColumns = @JoinColumn(name = "siteuser_id"),
-            inverseJoinColumns = @JoinColumn(name="interestkeyword_content"))
     @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "siteUser")
     private Set<InterestKeyword> interestKeywords=new HashSet<>();
 
     @Builder.Default
@@ -44,8 +39,8 @@ public class SiteUser {
     private Set<SiteUser> followings = new HashSet<>();
 
     public void addInterestKeywordContent(String keywordContent) {
-        InterestKeyword interestKeyword=new InterestKeyword(keywordContent);
-     interestKeywords.add(interestKeyword);
+        InterestKeyword interestKeyword=new InterestKeyword(keywordContent,this);
+        interestKeywords.add(interestKeyword);
     }
 
     public void follow(SiteUser following){

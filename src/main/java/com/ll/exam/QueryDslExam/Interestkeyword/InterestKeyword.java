@@ -1,19 +1,24 @@
 package com.ll.exam.QueryDslExam.Interestkeyword;
 
+import com.ll.exam.QueryDslExam.SiteUser.SiteUser;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class InterestKeyword {
+@IdClass(InterestKeywordId.class)
+public class InterestKeyword  {
     @Id
     private String content;
+
+    @Id
+    @ManyToOne
+    private SiteUser siteUser;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -28,18 +28,18 @@ class SiteUserRepositoryTest {
 
     @Test
     public void 회원생성(){
-    SiteUser siteUser3=SiteUser.builder()
-            .username("user3")
+    SiteUser siteUser9=SiteUser.builder()
+            .username("user9")
             .password("{noop}1234")
-            .email("user3@naver.com")
+            .email("user9@naver.com")
             .build();
 
-        SiteUser siteUser4=SiteUser.builder()
-                .username("user4")
+        SiteUser siteUser10=SiteUser.builder()
+                .username("user10")
                 .password("{noop}1234")
-                .email("user4@naver.com")
+                .email("user10@naver.com")
                 .build();
-        siteUserRepository.saveAll(Arrays.asList(siteUser3,siteUser4));
+        siteUserRepository.saveAll(Arrays.asList(siteUser9,siteUser10));
     }
 
     @Test
@@ -60,7 +60,7 @@ class SiteUserRepositoryTest {
     @DisplayName("모든 회원의 수")
     public void getQslCount(){
         long count=siteUserRepository.getQslCount();
-        assertEquals(2,count);
+        assertEquals(8,count);
     }
     @Test
     @DisplayName("가장오래된 회원 1명 ")
@@ -78,7 +78,7 @@ class SiteUserRepositoryTest {
     @DisplayName("like Test")
     public void searchQsl(){
         List<SiteUser> users=siteUserRepository.searchQsl("1");
-        assertEquals("user1",users.get(0).getUsername());
+        assertEquals("user10",users.get(0).getUsername());
     }
     @Test
     @DisplayName("검색, Page 리턴, id ASC, pageSize=1, page=0")
@@ -90,8 +90,8 @@ class SiteUserRepositoryTest {
         Pageable pageable = PageRequest.of(page,pageSize, Sort.by(sorts)); // 한 페이지에 10까지 가능
         Page<SiteUser> users = siteUserRepository.searchQsl("user", pageable);
         assertEquals(0,users.getNumber());
-        assertEquals(2,users.getTotalPages());
-        assertEquals(2,users.getTotalElements());
+        assertEquals(8,users.getTotalPages());
+        assertEquals(8,users.getTotalElements());
         // 검색어 : user1
         // 한 페이지에 나올 수 있는 아이템 수 : 1개
         // 현재 페이지 : 1
@@ -121,7 +121,7 @@ class SiteUserRepositoryTest {
         long totalCount = siteUserRepository.count();
         int pageSize = 1; // 한 페이지에 보여줄 아이템 개수
         int totalPages = (int) Math.ceil(totalCount / (double) pageSize);
-        int page = 1;
+        int page = 0;
         String kw = "user";
 
         List<Sort.Order> sorts = new ArrayList<>();
@@ -139,10 +139,10 @@ class SiteUserRepositoryTest {
 
         SiteUser u = users.get(0);
 
-        assertThat(u.getId()).isEqualTo(1L);
-        assertThat(u.getUsername()).isEqualTo("user1");
-        assertThat(u.getEmail()).isEqualTo("user1@naver.com");
-        assertThat(u.getPassword()).isEqualTo("user1");
+        assertThat(u.getId()).isEqualTo(8L);
+        assertThat(u.getUsername()).isEqualTo("user8");
+        assertThat(u.getEmail()).isEqualTo("user8@naver.com");
+        assertThat(u.getPassword()).isEqualTo("user8");
     }
 
     @Test
