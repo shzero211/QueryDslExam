@@ -30,14 +30,54 @@ public class TestInitData {
                      .password("user2")
                      .email("user2@naver.com")
                      .build();
+             SiteUser u3 = SiteUser.builder()
+                     .username("user3")
+                     .password("user3")
+                     .email("user3@naver.com")
+                     .build();
+             SiteUser u4 = SiteUser.builder()
+                     .username("user4")
+                     .password("user4")
+                     .email("user4@naver.com")
+                     .build();
+             SiteUser u5 = SiteUser.builder()
+                     .username("user5")
+                     .password("user5")
+                     .email("user5@naver.com")
+                     .build();
+             SiteUser u6 = SiteUser.builder()
+                     .username("user6")
+                     .password("user6")
+                     .email("user6@naver.com")
+                     .build();
+             SiteUser u7 = SiteUser.builder()
+                     .username("user7")
+                     .password("user7")
+                     .email("user7@naver.com")
+                     .build();
+             SiteUser u8 = SiteUser.builder()
+                     .username("user8")
+                     .password("user8")
+                     .email("user8@naver.com")
+                     .build();
 
              u1.addInterestKeywordContent("축구");
              u1.addInterestKeywordContent("농구");
-             siteUserRepository.save(u1);
              u1.addInterestKeywordContent("농구");
              u2.addInterestKeywordContent("클라이밍");
              u2.addInterestKeywordContent("마라톤");
-            siteUserRepository.save(u2);
+             siteUserRepository.saveAll(Arrays.asList(u1,u2,u3,u4,u5,u6,u7,u8));
+             u8.follow(u6);
+             u8.follow(u5);
+             u8.follow(u4);
+             u8.follow(u3);
+
+             u7.follow(u6);
+             u7.follow(u5);
+             u7.follow(u4);
+             u7.follow(u3);
+
+            siteUserRepository.saveAll(Arrays.asList(u1,u2,u3,u4,u5,u6,u7,u8));
 
          };
 
