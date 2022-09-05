@@ -67,10 +67,8 @@ public class TestInitData {
              u2.addInterestKeywordContent("클라이밍");
              u2.addInterestKeywordContent("마라톤");
              siteUserRepository.saveAll(Arrays.asList(u1,u2,u3,u4,u5,u6,u7,u8));
-             u8.follow(u6);
-             u8.follow(u5);
-             u8.follow(u4);
-             u8.follow(u3);
+             u8.follow(u1);
+             u8.follow(u2);
 
              u7.follow(u6);
              u7.follow(u5);

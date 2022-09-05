@@ -111,4 +111,16 @@ public class SiteUserRepositoryImpl implements  SiteUserRepositoryCustom{
                 .fetch();
 
     }
+
+    @Override
+    public List<String> getByInterestKeywordContents_byFollowingsOf(SiteUser user) {
+        QSiteUser siteUser2=new QSiteUser("siteUser2");
+        return jpaQueryFactory.select(interestKeyword.content)
+                .distinct()
+                .from(interestKeyword)
+                .innerJoin(interestKeyword.siteUser,siteUser)
+                .innerJoin(siteUser.followers,siteUser2)
+                .where(siteUser2.id.eq(user.getId()))
+                .fetch();
+    }
 }

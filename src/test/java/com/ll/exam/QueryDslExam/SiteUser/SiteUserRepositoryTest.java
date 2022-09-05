@@ -230,4 +230,13 @@ class SiteUserRepositoryTest {
         SiteUser u1=siteUserRepository.getQslUser(1L);
         u1.removeInterestKeywordContent("농구");
     }
+    @Test
+    @DisplayName("팔로우한 사람의 관심사 찾기")
+    @Transactional
+    @Rollback(value = false)
+    void t17(){
+        SiteUser u1=siteUserRepository.getQslUser(8L);
+        List<String> strs=siteUserRepository.getByInterestKeywordContents_byFollowingsOf(u1);
+   assertEquals(4,strs.size());
+    }
 }
